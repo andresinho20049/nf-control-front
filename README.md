@@ -104,5 +104,15 @@ O portal possui um contexto, `AppThemeContext` que recebe informações do tema 
 Ao instanciar um state com `usePersistedState`, diferente do `useState` convencional, é informado o valor inicial e uma chave (key), então é consultado no local storage se possui algum valor com a chave informada e setado no novo valor. \
 _Considerações a Rocketseat_
 
+## Lançamento Rapido
+É utilizado `context` para aplicar as funcionalidade de abrir `Dialog`, cada entidade possui um dialog com um unico `context` gerenciando quais estão abertos e/ou nenhum.
+
+Essa implementação de context facilitou a implementação rapida das funcionalidades de crud no front para diferentes entidades.
+
+**Considerações** \
+Foi desenvolvido primeiramente o back-end visando a regra de negocio e escopo do projeto, e posteriormente foi inicializado o desenvolvimento no front, portanto algumas funcionalidades não presentes no portal possuem endpoints disponiveis para implementação do mesmo.
+
+
+
 > **Controle de NF** \
 *Dev*: André Carlos
