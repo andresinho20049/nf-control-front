@@ -1,7 +1,7 @@
 export interface IPayloadData {
     aud: string[];
     updatePassword: boolean;
-    belt: beltThemeType;
+    id: number;
     user_name: string;
     scope: string[];
     name: string;
@@ -10,5 +10,3 @@ export interface IPayloadData {
     jti: string;
     client_id: string;
 }
-
-export type beltThemeType = 'Black' | 'Blue' | 'Brown' | 'Green' | 'Orange' | 'Purple' | 'White' | 'Yellow'; 

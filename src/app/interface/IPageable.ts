@@ -1,6 +1,3 @@
-import { IUserData } from "./IUserData";
-
-
 export interface Sort {
     empty: boolean;
     unsorted: boolean;
@@ -16,8 +13,8 @@ export interface Pageable {
     unpaged: boolean;
 }
 
-export interface IPageableData {
-    content: IUserData[];
+export type IPageableData<T> = {
+    content: T[];
     pageable: Pageable;
     totalPages: number;
     totalElements: number;
