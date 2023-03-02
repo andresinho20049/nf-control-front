@@ -1,49 +1,45 @@
-import { useSelectYearContext } from './../../context/SelectYearContext';
-import { useDialogConfirmAppContext } from './../../context/DialogConfirmAppContext';
-import { InvoiceService } from './../../services/api/invoice/InvoiceService';
-import { useEffect, useMemo, useState, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useDobounce } from "../../hooks/UseDebounce";
-import { IInvoiceData, IUserData } from '../../interface';
-import { UserService } from "../../services";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useDialogConfirmAppContext } from '../../context/DialogConfirmAppContext';
+import { CategoryService } from './../../services/api/category/CategoryService';
 import { useFormDialogContext } from '../../context/FormDialogContext';
+import { useDobounce } from "../../hooks/UseDebounce";
+import { useSearchParams } from "react-router-dom";
 import { useSnackBarContext } from '../../context';
+import { ICategoryData } from '../../interface';
 
 
-export const useInvoice = () => {
+export const useCategory = () => {
 
     const { debounce } = useDobounce();
 
     const { showMsg } = useSnackBarContext();
 
-    const { year } = useSelectYearContext();
-
     const { dialogOpened, handleOpen } = useFormDialogContext();
 
     const { handleOpenDialog } = useDialogConfirmAppContext();
-    const [selectedItem, setSelectedItem] = useState({} as IInvoiceData);
+    const [selectedItem, setSelectedItem] = useState({} as ICategoryData);
 
 
 
-    const handleConfirmDelete = useCallback((selectedItem: IInvoiceData) => {
+    const handleConfirmDelete = useCallback((selectedItem: ICategoryData) => {
         setSelectedItem(selectedItem);
         handleOpenDialog(selectedItem.id);
     }, [selectedItem])
 
     const handleDelete = useCallback((id: number) => {
-        InvoiceService.deleteById(id)
+        CategoryService.archiveById(id)
             .then((result) => {
                 if (result instanceof Error) {
                     showMsg(result.message)
                 } else {
-                    showMsg("NF deletada com sucesso!", "success");
+                    showMsg("Category arquivada com sucesso!", "success");
                     setSearchParams({ page: '0' }, { replace: true })
                 }
             })
     }, [])
 
-    const openInvoiceDialog = useCallback((id?: number) => {
-        handleOpen('invoice', id);
+    const openDialog = useCallback((id?: number) => {
+        handleOpen('category', id);
     }, []);
 
 
@@ -53,7 +49,7 @@ export const useInvoice = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [limitPage, setLimitPage] = useState(5);
     const [totalCount, setTotalCount] = useState(0);
-    const [rows, setRows] = useState<IInvoiceData[]>([]);
+    const [rows, setRows] = useState<ICategoryData[]>([]);
 
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -87,7 +83,7 @@ export const useInvoice = () => {
 
         debounce(() => {
 
-            InvoiceService.findPaginated(page, limitPage, year)
+            CategoryService.findPaginated('', page, limitPage)
                 .then((res) => {
                     setLoading(false);
 
@@ -100,12 +96,12 @@ export const useInvoice = () => {
                     }
                 });
         })
-    }, [dialogOpened, page, limitPage, year])
+    }, [dialogOpened, page, limitPage])
 
     return {
         isLoading,
 
-        openInvoiceDialog,
+        openDialog,
 
         selectedItem,
         handleDelete,

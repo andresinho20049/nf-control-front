@@ -7,7 +7,7 @@ interface IFormDialogContextData {
     handleClose: () => void;
 }
 
-export type IDialogType = 'invoice' | 'expense' | null;
+export type IDialogType = 'invoice' | 'expense' | 'category' | 'partner' | null;
 
 const FormDialogContext = createContext({} as IFormDialogContextData);
 

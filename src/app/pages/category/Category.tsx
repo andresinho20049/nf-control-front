@@ -1,14 +1,14 @@
 import { Icon, Box, Grid, IconButton, Typography, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, Button, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { useInvoice } from './UseInvoice';
+import { useCategory } from './UseCategory';
 import { DialogConfirm } from '../../components/dialog/confirm-action/DialogConfirm';
 
-export const Invoice = () => {
+export const Category = () => {
 
     const {
         isLoading,
 
-        openInvoiceDialog,
+        openDialog,
 
         selectedItem,
         handleDelete,
@@ -21,7 +21,7 @@ export const Invoice = () => {
         handleChangePage,
         handleChangeRowsPerPage,
 
-    } = useInvoice();
+    } = useCategory();
 
     return (
         <Grid container sx={{ p: 2, gap: 3 }}>
@@ -36,13 +36,13 @@ export const Invoice = () => {
                 }}
                 >
                     <Typography>
-                        Controle de Notas Fiscais
+                        Controle de Categoria
                     </Typography>
                     
                     <Button
                         variant='outlined'
                         sx={{ px: 2, gap: 1 }}
-                        onClick={() => openInvoiceDialog()}
+                        onClick={() => openDialog()}
                     >
                         <AddIcon />
                         Nova
@@ -55,31 +55,25 @@ export const Invoice = () => {
                     <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Numero da Nota</TableCell>
-                                <TableCell>Competencia</TableCell>
-                                <TableCell>Vencimento</TableCell>
-                                <TableCell>Parceiro</TableCell>
-                                <TableCell>Valor</TableCell>
+                                <TableCell>Nome</TableCell>
+                                <TableCell>Descrição</TableCell>
                                 <TableCell width={100}>Ações</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((invoice) => (
+                            {rows.map((category) => (
                                 <TableRow
-                                    key={invoice.id}
+                                    key={category.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell>{invoice.invoiceNumber}</TableCell>
-                                    <TableCell>{invoice.accrualDate.toLocaleString(`pt-BR`)}</TableCell>
-                                    <TableCell>{invoice.dueDate.toLocaleString(`pt-BR`)}</TableCell>
-                                    <TableCell>{invoice.partner.shortName}</TableCell>
-                                    <TableCell>{invoice.value}</TableCell>
+                                    <TableCell>{category.name}</TableCell>
+                                    <TableCell>{category.description}</TableCell>
                                     <TableCell>
-                                        <IconButton onClick={() => openInvoiceDialog(invoice.id)} size="small">
+                                        <IconButton onClick={() => openDialog(category.id)} size="small">
                                             <Icon color='info'>edit</Icon>
                                         </IconButton>
-                                        <IconButton onClick={() => handleConfirmDelete(invoice)} size="small">
-                                            <Icon color='error'>delete</Icon>
+                                        <IconButton onClick={() => handleConfirmDelete(category)} size="small">
+                                            <Icon color='warning'>archive</Icon>
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>
@@ -121,9 +115,9 @@ export const Invoice = () => {
             </Grid>
 
             <DialogConfirm
-                titleDialog="Excluir NF"
+                titleDialog="Arquiva Categoria"
                 contentText={`
-                    Deseja realmente excluir a nota (${selectedItem.invoiceNumber})? 
+                    Deseja realmente arquiva a Categoria (${selectedItem.name})? 
                     Caso queira continuar é só clicar em confirmar.
                 `}
                 handleActionDialog={() => handleDelete(selectedItem.id || 0)}

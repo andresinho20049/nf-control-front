@@ -1,5 +1,5 @@
 export interface ICategoryData {
-    id: number;
+    id?: number;
     name: string;
     description: string;
     isArchive: boolean;

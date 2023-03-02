@@ -9,6 +9,8 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { DialogExpense } from '../dialog/expense/DialogExpense';
 import { DialogInvoice } from '../dialog/invoice/DialogInvoice';
 import { useFormDialogContext } from '../../context/FormDialogContext';
+import { DialogCategory } from '../dialog/category/DialogCategory';
+import { DialogPartner } from '../dialog/partner/DialogPartner';
 
 interface IActionsType {
   icon: JSX.Element,
@@ -52,6 +54,8 @@ export const SpeedDialButton = () => {
       </SpeedDial>
       <DialogInvoice />
       <DialogExpense />
+      <DialogCategory />
+      <DialogPartner />
     </>
   );
 }

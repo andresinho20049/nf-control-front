@@ -1,14 +1,14 @@
 import { Icon, Box, Grid, IconButton, Typography, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, Button, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { useInvoice } from './UseInvoice';
+import { usePartner } from './UsePartner';
 import { DialogConfirm } from '../../components/dialog/confirm-action/DialogConfirm';
 
-export const Invoice = () => {
+export const Partner = () => {
 
     const {
         isLoading,
 
-        openInvoiceDialog,
+        openDialog,
 
         selectedItem,
         handleDelete,
@@ -21,7 +21,7 @@ export const Invoice = () => {
         handleChangePage,
         handleChangeRowsPerPage,
 
-    } = useInvoice();
+    } = usePartner();
 
     return (
         <Grid container sx={{ p: 2, gap: 3 }}>
@@ -36,13 +36,13 @@ export const Invoice = () => {
                 }}
                 >
                     <Typography>
-                        Controle de Notas Fiscais
+                        Gestão de Parceiros
                     </Typography>
                     
                     <Button
                         variant='outlined'
                         sx={{ px: 2, gap: 1 }}
-                        onClick={() => openInvoiceDialog()}
+                        onClick={() => openDialog()}
                     >
                         <AddIcon />
                         Nova
@@ -55,30 +55,26 @@ export const Invoice = () => {
                     <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Numero da Nota</TableCell>
-                                <TableCell>Competencia</TableCell>
-                                <TableCell>Vencimento</TableCell>
-                                <TableCell>Parceiro</TableCell>
-                                <TableCell>Valor</TableCell>
+                                <TableCell>Apelido</TableCell>
+                                <TableCell>Razão Social</TableCell>
+                                <TableCell>CNPJ</TableCell>
                                 <TableCell width={100}>Ações</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((invoice) => (
+                            {rows.map((partner) => (
                                 <TableRow
-                                    key={invoice.id}
+                                    key={partner.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell>{invoice.invoiceNumber}</TableCell>
-                                    <TableCell>{invoice.accrualDate.toLocaleString(`pt-BR`)}</TableCell>
-                                    <TableCell>{invoice.dueDate.toLocaleString(`pt-BR`)}</TableCell>
-                                    <TableCell>{invoice.partner.shortName}</TableCell>
-                                    <TableCell>{invoice.value}</TableCell>
+                                    <TableCell>{partner.shortName}</TableCell>
+                                    <TableCell>{partner.legalName}</TableCell>
+                                    <TableCell>{partner.cnpj}</TableCell>
                                     <TableCell>
-                                        <IconButton onClick={() => openInvoiceDialog(invoice.id)} size="small">
+                                        <IconButton onClick={() => openDialog(partner.id)} size="small">
                                             <Icon color='info'>edit</Icon>
                                         </IconButton>
-                                        <IconButton onClick={() => handleConfirmDelete(invoice)} size="small">
+                                        <IconButton onClick={() => handleConfirmDelete(partner)} size="small">
                                             <Icon color='error'>delete</Icon>
                                         </IconButton>
                                     </TableCell>
@@ -121,9 +117,9 @@ export const Invoice = () => {
             </Grid>
 
             <DialogConfirm
-                titleDialog="Excluir NF"
+                titleDialog="Deletar Parceiro"
                 contentText={`
-                    Deseja realmente excluir a nota (${selectedItem.invoiceNumber})? 
+                    Deseja realmente deletar o parceiro (${selectedItem.shortName})? 
                     Caso queira continuar é só clicar em confirmar.
                 `}
                 handleActionDialog={() => handleDelete(selectedItem.id || 0)}

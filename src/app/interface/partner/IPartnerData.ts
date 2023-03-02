@@ -1,5 +1,5 @@
 export interface IPartnerData {
-    id: number;
+    id?: number;
     cnpj: string;
     shortName: string;
     legalName: string;

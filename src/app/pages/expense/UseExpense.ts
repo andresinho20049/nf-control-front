@@ -6,6 +6,7 @@ import { useDobounce } from "../../hooks/UseDebounce";
 import { IExpenseData, IUserData } from '../../interface';
 import { useFormDialogContext } from '../../context/FormDialogContext';
 import { useSnackBarContext } from '../../context';
+import { useSelectYearContext } from '../../context/SelectYearContext';
 
 
 export const useExpense = () => {
@@ -13,6 +14,8 @@ export const useExpense = () => {
     const { debounce } = useDobounce();
 
     const { showMsg } = useSnackBarContext();
+
+    const { year } = useSelectYearContext();
 
     const { dialogOpened, handleOpen } = useFormDialogContext();
 
@@ -83,7 +86,7 @@ export const useExpense = () => {
 
         debounce(() => {
 
-            ExpenseService.findPaginated(page, limitPage)
+            ExpenseService.findPaginated(page, limitPage, year)
                 .then((res) => {
                     setLoading(false);
 
@@ -96,7 +99,7 @@ export const useExpense = () => {
                     }
                 });
         })
-    }, [dialogOpened, page, limitPage])
+    }, [dialogOpened, page, limitPage, year])
 
     return {
         isLoading,

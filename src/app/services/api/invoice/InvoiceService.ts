@@ -15,10 +15,10 @@ const findAll = async (): Promise<IInvoiceData[] | Error> => {
     }
 };
 
-const findPaginated = async (page = 1, size = 5): Promise<IPageableData<IInvoiceData> | Error> => {
+const findPaginated = async (page = 1, size = 5, year: string): Promise<IPageableData<IInvoiceData> | Error> => {
 
     try {
-        const { data } = await ApiForm.get(`/invoice/paginated?page=${page - 1}&size=${size}`);
+        const { data } = await ApiForm.get(`/invoice/paginated?page=${page - 1}&size=${size}&year=${year}`);
 
         return data;
     } catch (error: any) {

@@ -1,4 +1,4 @@
-import { ICategoryData, IPageableData } from "../../../interface";
+import { ICategoryData, IPageableData, IStandardData } from "../../../interface";
 import { ApiForm } from "../ApiConfig";
 
 // const ApiForm = ApiConfig();
@@ -37,25 +37,25 @@ const findById = async (id: number): Promise<ICategoryData | Error> => {
     }
 };
 
-const save = async (user: Omit<ICategoryData, 'id'>): Promise<ICategoryData | Error> => {
+const save = async (user: Omit<ICategoryData, 'id'>): Promise<string | Error> => {
 
     try {
 
-        const { data } = await ApiForm.post<ICategoryData>(`/category`, user);
+        const { data } = await ApiForm.post<IStandardData>(`/category`, user);
 
-        return data;
+        return data.msg;
     } catch (error: any) {
         return new Error(error?.message || "Erro ao criar o Registro");
     }
 };
 
-const update = async (user: ICategoryData): Promise<ICategoryData | Error> => {
+const update = async (user: ICategoryData): Promise<string | Error> => {
 
     try {
 
-        const { data } = await ApiForm.put<ICategoryData>(`/category`, user);
+        const { data } = await ApiForm.put<IStandardData>(`/category`, user);
 
-        return data;
+        return data.msg;
     } catch (error: any) {
         return new Error(error?.message || "Erro ao atualizar o Registro");
     }

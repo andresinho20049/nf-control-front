@@ -1,3 +1,4 @@
+import { IStandardData } from './../../../interface/standard/IStandardData';
 import { IPageableData, IPartnerData } from "../../../interface";
 import { ApiForm } from "../ApiConfig";
 
@@ -40,25 +41,25 @@ const findById = async (id: number): Promise<IPartnerData | Error> => {
     }
 };
 
-const save = async (user: Omit<IPartnerData, 'id'>): Promise<IPartnerData | Error> => {
+const save = async (user: Omit<IPartnerData, 'id'>): Promise<string | Error> => {
 
     try {
 
-        const { data } = await ApiForm.post<IPartnerData>(`/partner`, user);
+        const { data } = await ApiForm.post<IStandardData>(`/partner`, user);
 
-        return data;
+        return data.msg;
     } catch (error: any) {
         return new Error(error?.message || "Erro ao criar o Registro");
     }
 };
 
-const update = async (user: IPartnerData): Promise<IPartnerData | Error> => {
+const update = async (user: IPartnerData): Promise<string | Error> => {
 
     try {
 
-        const { data } = await ApiForm.put<IPartnerData>(`/partner`, user);
+        const { data } = await ApiForm.put<IStandardData>(`/partner`, user);
 
-        return data;
+        return data.msg;
     } catch (error: any) {
         return new Error(error?.message || "Erro ao atualizar o Registro");
     }

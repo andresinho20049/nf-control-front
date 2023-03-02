@@ -53,7 +53,11 @@ export const Expense = () => {
                     <Table sx={{ minWidth: 650 }} size="small" stickyHeader>
                         <TableHead>
                             <TableRow>
+                                <TableCell>Parceiro</TableCell>
+                                <TableCell>Categoria</TableCell>
                                 <TableCell>Nome</TableCell>
+                                <TableCell>Competencia</TableCell>
+                                <TableCell>Data de Pagamento</TableCell>
                                 <TableCell>Valor</TableCell>
                                 <TableCell width={100}>Ações</TableCell>
                             </TableRow>
@@ -64,7 +68,11 @@ export const Expense = () => {
                                     key={expense.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
+                                    <TableCell>{expense.partner.shortName}</TableCell>
+                                    <TableCell>{expense.category.name}</TableCell>
                                     <TableCell>{expense.name}</TableCell>
+                                    <TableCell>{expense.accrualDate}</TableCell>
+                                    <TableCell>{expense.paymentDate}</TableCell>
                                     <TableCell>{expense.value}</TableCell>
                                     <TableCell>
                                         <IconButton onClick={() => openExpenseDialog(expense.id)} size="small">
