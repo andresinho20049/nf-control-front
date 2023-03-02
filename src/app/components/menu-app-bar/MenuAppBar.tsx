@@ -5,6 +5,7 @@ import { useMenuAppBar } from '../../hooks/useMenuAppBar';
 import { pages } from '../../routes/Rotas';
 import { LogoutAppBar } from './LogoutAppBar';
 import { MenuItemAppBar } from './MenuItemAppBar';
+import { SelectYear } from './SelectYear';
 import { ToggleThemeSetting } from './ToggleThemeSetting';
 import { UserInfoAppBar } from './UserInfoAppBar';
 
@@ -16,9 +17,6 @@ export const MenuAppBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, mx: 1 }} >
-            <img alt='Logo' src={'./android-chrome-512x512.png'} width={55} />
-          </Box>
           <Typography
             variant="h6"
             noWrap
@@ -34,7 +32,7 @@ export const MenuAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            Liga BJJ
+            Controle de NF
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -71,9 +69,6 @@ export const MenuAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' }, mx: 1 }} >
-            <img alt='Logo' src={'./android-chrome-512x512.png'} width={45} />
-          </Box>
           <Typography
             variant="h5"
             noWrap
@@ -90,11 +85,11 @@ export const MenuAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            Liga BJJ
+            NF Control
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-                <MenuItemAppBar key={page.to} label={page.label} to={page.to} isButton />
+              <MenuItemAppBar key={page.to} label={page.label} to={page.to} isButton />
             ))}
           </Box>
 
@@ -121,6 +116,7 @@ export const MenuAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               <UserInfoAppBar />
+              <SelectYear />
               <ToggleThemeSetting />
               <Divider />
               <LogoutAppBar />

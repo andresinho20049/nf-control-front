@@ -29,7 +29,7 @@ export const VSelectLabel = ({
         clearError } = useField(name);
 
     const selectRef = useRef(null);
-    const [value, setValue] = useState(defaultValue || 'Roboto');
+    const [value, setValue] = useState(defaultValue || '');
 
     useEffect(() => {
         registerField({

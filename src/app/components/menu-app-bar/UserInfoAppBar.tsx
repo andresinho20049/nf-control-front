@@ -21,9 +21,9 @@ export const UserInfoAppBar = () => {
                             variant="body2"
                             color="text.primary"
                         >
-                            {"Faixa: "}
+                            {"mail: "}
                         </Typography>
-                        {userLogged?.belt}
+                        {userLogged?.user_name}
                     </>
                 }
             />

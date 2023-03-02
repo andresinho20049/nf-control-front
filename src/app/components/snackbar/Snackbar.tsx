@@ -10,9 +10,9 @@ export const SnackBarApp = () => {
             open={isMsg}
             onClose={handleClose}
             autoHideDuration={5000}
-            TransitionComponent={(props: SlideProps) => <Slide {...props} direction="up" />}
+            // TransitionComponent={(props: SlideProps) => <Slide {...props} direction="up" />}
         >
-            <Alert onClose={handleClose} severity={severity}>
+            <Alert severity={severity}>
                 {msg}
             </Alert>
         </Snackbar>

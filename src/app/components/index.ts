@@ -3,9 +3,9 @@ export * from './snackbar/Snackbar'
 export * from './menu-app-bar/MenuAppBar';
 export * from './menu-app-bar/ToggleThemeSetting'
 export * from './menu-app-bar/MenuItemAppBar';
-export * from './forms/BoxAppLabel';
-export * from './forms/Copyright';
+export * from './copyright/Copyright';
 export * from './forms/VAutocomplete';
 export * from './forms/VSelectLabel';
 export * from './forms/VSwitch';
 export * from './forms/VTextField';
+export * from './speed-dial/SpeedDialButton';

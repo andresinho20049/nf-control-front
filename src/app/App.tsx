@@ -1,6 +1,6 @@
 import { darkScrollbar, GlobalStyles } from "@mui/material";
 import { AppThemeProvider, AuthenticationProvider, SnackBarProvider } from "./context";
-import './form/TraducoesYup';
+import './form/TranslateYup';
 import { Rotas } from "./routes/Rotas";
 
 const App = () => {
