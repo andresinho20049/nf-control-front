@@ -15,7 +15,7 @@ const getAll = async (): Promise<IUserData[] | Error> => {
     }
 };
 
-const getPaginated = async (page = 1, size = 5): Promise<IPageableData | Error> => {
+const getPaginated = async (page = 1, size = 5): Promise<IPageableData<IUserData> | Error> => {
 
     try {
         const { data } = await ApiForm.get(`/user/paginated?page=${page - 1}&size=${size}`);
