@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useAuthenticationContext } from "../context/AuthenticationContext";
-import { ForgetPassword, Home, Login, SignUp } from "../pages";
-import { Usuarios } from "../pages/usuarios/Usuarios";
 import { Layout } from "../components";
+import { LayoutHistory } from "../components/layout/LayoutHistory";
+import { useAuthenticationContext } from "../context/AuthenticationContext";
+import { Dashboard, ForgetPassword, Login, SignUp, Invoice, Expense } from "../pages";
 
 interface IPagesData {
     to: string
@@ -13,20 +13,20 @@ interface IPagesData {
 
 export const pages: IPagesData[] = [
     {
-        label: 'Home',
+        label: 'Dashboard',
         to: '/',
-        element: <Home />
+        element: <Dashboard />
     },
     {
-        label: 'Usuários',
-        to: '/users',
-        element: <Usuarios />
+        label: 'Notas Fiscais',
+        to: '/invoice',
+        element: <Invoice />
+    },
+    {
+        label: 'Despesas',
+        to: '/despesa',
+        element: <Expense />
     }
-    // {
-    //     label: 'Page3',
-    //     to: '/page3',
-    //     element: <Home />
-    // }
 ]
 export const Rotas = () => {
 
