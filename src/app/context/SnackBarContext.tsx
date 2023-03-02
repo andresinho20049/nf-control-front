@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
 import { AlertColor } from "@mui/material/Alert";
 
 
@@ -31,9 +31,13 @@ export const SnackBarProvider = ({children}:ISnackBarProviderProps) => {
     const handleClose = useCallback(() => {
         setMsg(null);
     }, [msg])
+
+    const isMsg = useMemo(() => {
+        return !!msg;
+    }, [msg]);
     
     return (
-        <SnackBarContext.Provider value={{msg, showMsg, isMsg: !!msg, severity, handleClose}}>
+        <SnackBarContext.Provider value={{msg, showMsg, isMsg, severity, handleClose}}>
             {children}
         </SnackBarContext.Provider>
     )

@@ -3,7 +3,7 @@ import { useField } from "@unform/core";
 import { useEffect, useState } from "react";
 
 
-type IVTextFieldProps = TextFieldProps & {
+export type IVTextFieldProps = TextFieldProps & {
     name: string;
 }
 

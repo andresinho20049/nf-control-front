@@ -4,8 +4,8 @@ export const Copyright = (props:TypographyProps) => {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
           {'Copyright © '}
-          <Link color="inherit" target="_blank" href="https://github.com/andresinho20049/liga-bjj-front">
-            Liga BJJ
+          <Link color="inherit" target="_blank" href="https://git.vibbra.com.br/nf-control-8612">
+            NF Control
           </Link>{' '}
           {new Date().getFullYear()}
           {'.'}
