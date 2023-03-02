@@ -1,12 +1,10 @@
-import { FormHandles, Omit } from '@unform/core';
-import { Form } from '@unform/web';
-import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as yup from "yup";
-import { VAutocomplete, VTextField } from '../..';
+import { FormHandles } from '@unform/core';
 import { useSnackBarContext } from '../../../context';
-import { useFormDialogContext } from '../../../context/FormDialogContext';
 import { IInvoiceData, IPartnerData } from '../../../interface';
-import { InvoiceService, PartnerService } from '../../../services'
+import { InvoiceService, PartnerService } from '../../../services';
+import { useFormDialogContext } from '../../../context/FormDialogContext';
 
 //hooks used autocomplete
 const useFindPartner = () => {
@@ -32,22 +30,29 @@ const useFindPartner = () => {
 
 export const useDialogInvoice = () => {
 
-    const { dialogOpened, handleClose, data } = useFormDialogContext();
+    const { dialogOpened, handleClose, id } = useFormDialogContext();
 
 
     const title = useMemo(() => {
-        return !!data ? 'Atualizar NF' : 'Cadastrar NF';
-    }, []);
+        return !!id ? 'Atualizar NF' : 'Cadastrar NF';
+    }, [id]);
 
     const open = useMemo(() => {
         return dialogOpened === 'invoice';
     }, [dialogOpened]);
 
     useEffect(() => {
-        if(!!data) {
-            formRef.current?.setData(data);
+        if (!!id && open) {
+            InvoiceService.findById(id).then(res => {
+                if (res instanceof Error) {
+                    showMsg(res.message);
+                    return;
+                } else {
+                    formRef.current?.setData(res);
+                }
+            })
         }
-    }, [data]);
+    }, [id, open]);
 
 
     const { showMsg } = useSnackBarContext();
@@ -55,11 +60,12 @@ export const useDialogInvoice = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const formRef = useRef<FormHandles>(null);
-    const formValidSchema: yup.SchemaOf<Omit<IInvoiceData, 'id'>> = yup.object().shape({
+    const formValidSchema: yup.SchemaOf<IInvoiceData> = yup.object().shape({
+        id: yup.number().optional(),
         invoiceNumber: yup.number().required(),
         invoiceDescription: yup.string().optional(),
-        accrualDate: yup.string().required(),
-        dueDate: yup.string().required(),
+        accrualDate: yup.date().required(),
+        dueDate: yup.date().required(),
         partner: yup.object().shape({
             id: yup.number().required(),
             cnpj: yup.string().required(),
@@ -72,22 +78,40 @@ export const useDialogInvoice = () => {
     const handleSummit = useCallback((dados: IInvoiceData) => {
         setIsLoading(true);
 
+        dados.id = id
+
         formValidSchema
             .validate(dados, { abortEarly: false })
             .then((dadosValid) => {
+                console.log(dadosValid);
+                if (!!id) {
+                    InvoiceService.update(dadosValid).then((res) => {
 
-                InvoiceService.save(dadosValid).then((res) => {
-                    
-                    setIsLoading(false);
+                        setIsLoading(false);
 
-                    if(res instanceof Error){
-                        showMsg(res.message);
-                        return;
-                    } else {
-                        showMsg(res, 'success');
-                        handleClose();
-                    }
-                })
+                        if (res instanceof Error) {
+                            showMsg(res.message);
+                            return;
+                        } else {
+                            showMsg(res, 'success');
+                            handleClose();
+                        }
+                    })
+                } else {
+
+                    InvoiceService.save(dadosValid).then((res) => {
+
+                        setIsLoading(false);
+
+                        if (res instanceof Error) {
+                            showMsg(res.message);
+                            return;
+                        } else {
+                            showMsg(res, 'success');
+                            handleClose();
+                        }
+                    })
+                }
 
             })
             .catch((errors: yup.ValidationError) => {
@@ -103,7 +127,7 @@ export const useDialogInvoice = () => {
                 setIsLoading(false);
             })
 
-    }, []);
+    }, [id]);
 
     const handleSave = useCallback(() => {
         formRef.current?.submitForm();

@@ -52,22 +52,30 @@ const useFindCategory = () => {
 
 export const useDialogExpense = () => {
 
-    const { dialogOpened, handleClose, data } = useFormDialogContext();
+    const { dialogOpened, handleClose, id } = useFormDialogContext();
 
 
     const title = useMemo(() => {
-        return !!data ? 'Atualizar Despesa' : 'Cadastrar Despesa';
-    }, []);
+        return !!id ? 'Atualizar Despesa' : 'Cadastrar Despesa';
+    }, [id]);
 
     const open = useMemo(() => {
         return dialogOpened === 'expense';
     }, [dialogOpened]);
 
     useEffect(() => {
-        if (!!data) {
-            formRef.current?.setData(data);
+        console.log(id);
+        if (!!id && open) {
+            ExpenseService.findById(id).then(res => {
+                if (res instanceof Error) {
+                    showMsg(res.message);
+                    return;
+                } else {
+                    formRef.current?.setData(res);
+                }
+            })
         }
-    }, [data]);
+    }, [id, open]);
 
 
     const { showMsg } = useSnackBarContext();
@@ -98,22 +106,43 @@ export const useDialogExpense = () => {
     const handleSummit = useCallback((dados: IExpenseData) => {
         setIsLoading(true);
 
+        dados.id = id;
+
         formValidSchema
             .validate(dados, { abortEarly: false })
             .then((dadosValid) => {
 
-                ExpenseService.save(dadosValid).then((res) => {
+                if (!!id) {
 
-                    setIsLoading(false);
+                    ExpenseService.update(dadosValid).then((res) => {
 
-                    if (res instanceof Error) {
-                        showMsg(res.message);
-                        return;
-                    } else {
-                        showMsg(res, 'success');
-                        handleClose();
-                    }
-                })
+                        setIsLoading(false);
+
+                        if (res instanceof Error) {
+                            showMsg(res.message);
+                            return;
+                        } else {
+                            showMsg(res, 'success');
+                            handleClose();
+                        }
+                    })
+
+                } else {
+
+                    ExpenseService.save(dadosValid).then((res) => {
+
+                        setIsLoading(false);
+
+                        if (res instanceof Error) {
+                            showMsg(res.message);
+                            return;
+                        } else {
+                            showMsg(res, 'success');
+                            handleClose();
+                        }
+                    })
+                }
+
 
             })
             .catch((errors: yup.ValidationError) => {
@@ -129,7 +158,7 @@ export const useDialogExpense = () => {
                 setIsLoading(false);
             })
 
-    }, []);
+    }, [id]);
 
     const handleSave = useCallback(() => {
         formRef.current?.submitForm();

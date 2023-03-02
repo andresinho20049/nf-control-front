@@ -1,9 +1,9 @@
 import { createContext, ReactNode, useCallback, useContext, useState } from "react";
 
 interface IFormDialogContextData {
-    data: Object | null;
+    id?: number;
     dialogOpened: IDialogType;
-    handleOpen: (dialog: IDialogType, data?: Object) => void;
+    handleOpen: (dialog: IDialogType, id?: number) => void;
     handleClose: () => void;
 }
 
@@ -22,20 +22,20 @@ interface IFormDialogProviderProps{
 export const FormDialogProvider = ({ children }: IFormDialogProviderProps) => {
 
     const [dialogOpened, setDialogOpened] = useState<IDialogType>(null);
-    const [data, setData] = useState<Object | null>(null);
+    const [id, setId] = useState<number>();
 
-    const handleOpen = useCallback((dialog: IDialogType, data?: Object) => {
+    const handleOpen = useCallback((dialog: IDialogType, id?: number) => {
         setDialogOpened(dialog);
-        setData(data || null);
-    }, [data, dialogOpened]);
+        setId(id);
+    }, [id, dialogOpened]);
 
     const handleClose = useCallback(() => {
-        setData(null);
+        setId(undefined);
         setDialogOpened(null);
-    }, [data, dialogOpened]);
+    }, [id, dialogOpened]);
 
     return (
-        <FormDialogContext.Provider value={{ data, dialogOpened, handleOpen, handleClose }}>
+        <FormDialogContext.Provider value={{ id, dialogOpened, handleOpen, handleClose }}>
             {children}
         </FormDialogContext.Provider>
     )

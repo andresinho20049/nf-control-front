@@ -1,9 +1,9 @@
 import { IPartnerData } from "../partner/IPartnerData";
 
 export interface IInvoiceData {
-    id: number;
-    accrualDate: string;
-    dueDate: string;
+    id?: number;
+    accrualDate: Date;
+    dueDate: Date;
     invoiceDescription?: string;
     invoiceNumber: number;
     partner: IPartnerData;

@@ -42,6 +42,16 @@ export const DialogInvoice = () => {
                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
                             <Grid container spacing={2} xs={12}>
+                                <Grid item sx={{display: "none"}}>
+                                    <VTextField
+                                        fullWidth
+                                        id="id"
+                                        name="id"
+                                        variant="standard"
+                                        type="number"
+                                        disabled={isLoading}
+                                    />
+                                </Grid>
                                 <Grid item xs={12}>
                                     <VAutocomplete
                                         name="partner"
