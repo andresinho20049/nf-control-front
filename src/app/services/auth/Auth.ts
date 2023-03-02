@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Buffer } from 'buffer';
 import { encryptedAES } from '../../hooks/UseCrypto';
-import { IPayloadData, IUserLogin } from '../../interface';
+import { IPayloadData, IUserLogin, IUserData } from '../../interface';
 
 const login = async (login: IUserLogin): Promise<string> => {
 
@@ -52,18 +52,30 @@ const logout = async (token: string) => {
 
     try {
         await axios(config);
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 
 }
 
+const signUp = async (user: IUserData): Promise<void> => {
+
+    const config = {
+        method: 'post',
+        withCredentials: false,
+        url: `${process.env.REACT_APP_BASE_URL}/user`,
+        data: user
+    };
+
+    await axios(config);
+}
+
 const parseToken = (token: string | null): IPayloadData | null => {
     try {
 
-        if(token === null)
+        if (token === null)
             return null;
-        
+
         const userLogged: IPayloadData = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
         return userLogged;
 
@@ -75,6 +87,7 @@ const parseToken = (token: string | null): IPayloadData | null => {
 export const AuthService = {
     login,
     logout,
+    signUp,
 
     parseToken
 };
