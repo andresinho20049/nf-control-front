@@ -9,7 +9,7 @@ import { Avatar, Box, Button, CircularProgress, CssBaseline, Grid, Link, Paper, 
 
 export const SignUp = () => {
 
-    const { isLoading, formRef, listBeltOptions, handleSignUp } = useSignUp();
+    const { isLoading, formRef, handleSignUp } = useSignUp();
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
@@ -74,14 +74,6 @@ export const SignUp = () => {
                                         label="Confirm Password"
                                         variant="standard"
                                         disabled={isLoading}
-                                    />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <VSelectLabel 
-                                        label="Faixa"
-                                        name="belt"
-                                        options={listBeltOptions}
                                     />
                                 </Grid>
 

@@ -1,7 +1,8 @@
-import * as yup from "yup";
-import { FormHandles } from '@unform/core';
+import { useCallback, useRef, useState } from 'react';
+import { useSnackBarContext } from '../../../context';
 import { useNavigate } from 'react-router-dom';
-import { useCallback, useState, useRef } from 'react';
+import { FormHandles } from '@unform/core';
+import * as yup from "yup";
 
 interface IUserForgetPassword {
     email: string
@@ -18,7 +19,7 @@ export const useForgetPassword = () => {
         email: yup.string().required().email()
     });
 
-    // const { showMsg } = useSnackBarContext();
+    const { showMsg } = useSnackBarContext();
 
     const handleForget = useCallback((dados: IUserForgetPassword) => {
         setIsLoading(true);
@@ -26,6 +27,8 @@ export const useForgetPassword = () => {
         formValidSchema
             .validate(dados, { abortEarly: false })
             .then((dadosValid: IUserForgetPassword) => {
+
+                showMsg("Em desenvolvimento!", 'warning');
 
                 setTimeout(() => {
                     setIsLoading(false);

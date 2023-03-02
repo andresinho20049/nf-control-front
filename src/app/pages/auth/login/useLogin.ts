@@ -1,9 +1,9 @@
 import { useCallback, useRef, useState } from "react";
-import * as yup from "yup";
-import { FormHandles } from "@unform/core";
-import { useNavigate } from "react-router-dom";
-import { IUserLogin } from "../../../interface";
 import { useAuthenticationContext, useSnackBarContext } from "../../../context";
+import { IUserLogin } from "../../../interface";
+import { useNavigate } from "react-router-dom";
+import { FormHandles } from "@unform/core";
+import * as yup from "yup";
 
 export const useLogin = () => {
     
